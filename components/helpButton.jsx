@@ -3,17 +3,17 @@ import { ImageBackground, Text, View, Pressable } from 'react-native';
 import { Link } from 'expo-router';
 
 const handlePress = () => {
-    console.log('"Begin Adventure" pressed');
+    console.log('"The Adventurers Guide" pressed');
   };
 
-const PlayButton = () => {
+const HelpButton = () => {
   return (
-    <View className = "p-4 m-2 flex justify-center items-center">
+    <View className = "p-4 mt-5 m-2 flex justify-center items-center">
     <Pressable onPress={handlePress}>
-        <Text className="text-2xl font-bold text-black">Begin Adventure!</Text> 
+        <Text className="text-2xl font-bold text-black">The Adventurer's Guide!</Text> 
     </Pressable>
     </View>
   )
 }
 
-export default PlayButton
+export default HelpButton
