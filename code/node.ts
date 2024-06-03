@@ -1,4 +1,5 @@
-interface Node {
+import {Directions} from "./Utility.ts";
+export interface Node {
     solution?: boolean;
     location: readonly [number, number];
     north?: Node;
