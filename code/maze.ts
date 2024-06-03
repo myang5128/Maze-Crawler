@@ -1,4 +1,4 @@
-import {Node} from "./node.ts"
+import {Node} from "./Node"
 
 interface Maze{
     height: number;

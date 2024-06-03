@@ -1,4 +1,4 @@
-import {Directions} from "./Utility.ts";
+import {Directions} from "./Utility";
 export interface Node {
     solution?: boolean;
     location: readonly [number, number];
