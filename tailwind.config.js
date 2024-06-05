@@ -11,6 +11,7 @@ module.exports = {
         gray: "#2a2d3c",
       },
       fontFamily: {
+        mainfont: ["BreatheFire", "sans-serif"],
         pthin: ["Poppins-Thin", "sans-serif"],
         pextralight: ["Poppins-ExtraLight", "sans-serif"],
         plight: ["Poppins-Light", "sans-serif"],
