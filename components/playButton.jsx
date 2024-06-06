@@ -1,15 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
 import { Animated, ImageBackground, Text, View, Pressable } from 'react-native';
 import { Link } from 'expo-router';
-import React, { useEffect, useRef } from 'react';
-
-const handlePress = () => {
-    console.log('"Begin Adventure" pressed');
-  };
+import React, { useEffect, useRef, useState } from 'react';
+import background from '../assets/images/backgroundMenu.jpg';
+import { Audio } from 'expo-av';
 
 const PlayButton = () => {
 
   const bounceValue = useRef(new Animated.Value(0)).current;
+  const [sound, setSound] = useState();
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          console.log('Unloading Sound');
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   useEffect(() => {
     const bounceAnimation = Animated.loop(
@@ -30,15 +38,30 @@ const PlayButton = () => {
     bounceAnimation.start();
   }, [bounceValue]);
 
+  const handlePress = async () => {
+    console.log('"Begin Adventure" pressed');
+    const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/clickSounds.wav'));
+    setSound(sound);
+    console.log("Do you hear sounds?");
+    await sound.playAsync();
+  };
+
   return (
-    <View className = "p-4 m-2 flex justify-center items-center">
-    <Pressable onPress={handlePress}>
-        <Animated.Text 
-        className="text-2xl font-mainfont text-black"
-        style={{ transform: [{ translateY: bounceValue }] }}>
-          Begin Adventure!
-        </Animated.Text> 
-    </Pressable>
+    <View className="flex-1 justify-center w-full h-full">
+      <Pressable onPress={handlePress} className="flex-1">
+        <ImageBackground source={background} resizeMode="cover" className="flex-1 items-center p-5">
+          <View className="flex-1 justify-center">
+            <Text className='text-6xl font-mainfont text-black'>Treasures of Titus</Text>
+          </View>
+          <View className='flex-1 justify-center'>
+            <Animated.Text 
+            className="text-2xl font-mainfont text-black"
+            style={{ transform: [{ translateY: bounceValue }] }}>
+              Begin Adventure!
+            </Animated.Text> 
+          </View>
+        </ImageBackground> 
+      </Pressable>
     </View>
   )
 }
