@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Animated, ImageBackground, Text, View, Pressable } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import React, { useEffect, useRef, useState } from 'react';
 import background from '../assets/images/backgroundMenu.jpg';
 import { Audio } from 'expo-av';
@@ -9,6 +9,7 @@ const PlayButton = () => {
 
   const bounceValue = useRef(new Animated.Value(0)).current;
   const [sound, setSound] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     return sound
@@ -44,6 +45,7 @@ const PlayButton = () => {
     setSound(sound);
     console.log("Do you hear sounds?");
     await sound.playAsync();
+    router.push('/character');
   };
 
   return (
