@@ -49,7 +49,7 @@ const PlayButton = () => {
   };
 
   return (
-    <View className="flex-1 justify-center w-full h-full">
+    <View className="flex-1 justify-center">
       <Pressable onPress={handlePress} className="flex-1">
         <ImageBackground source={background} resizeMode="cover" className="flex-1 items-center p-5">
           <View className="flex-1 justify-center">

@@ -6,7 +6,7 @@ SplashScreen.preventAutoHideAsync();
 
 const RootLayout = () => {
   const [fontsLoaded, error] = useFonts({
-    "BreatheFire": require("../assets/fonts/BreatheFire.ttf"),
+    "BreatheFire": require("../assets/fonts/BreatheFire.ttf")
   });
 
   useEffect(() => {
@@ -28,6 +28,7 @@ const RootLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="index" options = {{ headerShown: false}} />
+      <Stack.Screen name="character" options = {{ headerShown: false }} />
     </Stack>
   )
 }
