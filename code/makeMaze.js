@@ -10,6 +10,7 @@ function intializeMazeNodes(maze) {
     var tempArr = new Array;
     for (var i = 0; i < row; i++) {
         for (var j = 0; j < col; j++) {
+            var tempWalls = [];
             var temp = {
                 visited: false,
                 directions: [null, null, null, null]
@@ -18,59 +19,71 @@ function intializeMazeNodes(maze) {
             if (i == 0) {
                 temp.ValidN = false;
                 temp.ValidS = true;
-                temp.walls.push(Utility_1.Directions.South);
+                tempWalls.push(Utility_1.Directions.South);
             }
             else if (i == row - 1) {
                 temp.ValidS = false;
                 temp.ValidN = true;
-                temp.walls.push(Utility_1.Directions.North);
+                tempWalls.push(Utility_1.Directions.North);
             }
             else {
                 temp.ValidN = true;
                 temp.ValidS = true;
-                temp.walls.push(Utility_1.Directions.South);
-                temp.walls.push(Utility_1.Directions.North);
+                tempWalls.push(Utility_1.Directions.South);
+                tempWalls.push(Utility_1.Directions.North);
             }
             // intialize West and East directions
             if (j == 0) {
                 temp.ValidW = false;
                 temp.ValidE = true;
-                temp.walls.push(Utility_1.Directions.East);
+                tempWalls.push(Utility_1.Directions.East);
             }
             else if (j == col - 1) {
                 temp.ValidE = false;
                 temp.ValidW = true;
-                temp.walls.push(Utility_1.Directions.West);
+                tempWalls.push(Utility_1.Directions.West);
             }
             else {
                 temp.ValidW = true;
                 temp.ValidE = true;
-                temp.walls.push(Utility_1.Directions.West);
-                temp.walls.push(Utility_1.Directions.East);
+                tempWalls.push(Utility_1.Directions.West);
+                tempWalls.push(Utility_1.Directions.East);
             }
+            temp.walls = tempWalls;
             tempArr.push(temp);
         }
     }
     maze.nodes = tempArr;
-    connectNodes(maze, nodes[0], 0);
+    connectNodes(maze, maze.nodes[0], 0);
 }
 function connectNodes(maze, curNode, location) {
+    console.log(location);
     var nodes = maze.nodes;
-    if (!curNode.ValidN) {
-        curNode.directions[Utility_1.Directions.North] = nodes[location - 8];
-        connectNodes(maze, nodes[location - 8], location - 8);
+    var cols = maze.width;
+    curNode.visited = true;
+    if (curNode.ValidN) {
+        curNode.directions[Utility_1.Directions.North] = nodes[location - cols];
+        if (!nodes[location - cols].visited) {
+            connectNodes(maze, maze.nodes[location - cols], location - cols);
+        }
     }
-    if (!curNode.ValidE) {
+    if (curNode.ValidE) {
         curNode.directions[Utility_1.Directions.East] = nodes[location + 1];
-        connectNodes(maze, nodes[location + 1], location + 1);
+        if (!nodes[location + 1].visited) {
+            connectNodes(maze, maze.nodes[location + 1], location + 1);
+        }
     }
-    if (!curNode.ValidS) {
-        curNode.directions[Utility_1.Directions.South] = nodes[location + 8];
-        connectNodes(maze, nodes[location + 8], location + 8);
+    if (curNode.ValidS) {
+        curNode.directions[Utility_1.Directions.South] = nodes[location + cols];
+        if (!nodes[location + cols].visited) {
+            connectNodes(maze, maze.nodes[location + cols], location + cols);
+        }
     }
-    if (!curNode.ValidW) {
+    if (curNode.ValidW) {
         curNode.directions[Utility_1.Directions.West] = nodes[location - 1];
-        connectNodes(maze, nodes[location - 1], location - 1);
+        if (!nodes[location - 1].visited) {
+            connectNodes(maze, maze.nodes[location - 1], location - 1);
+        }
     }
 }
 function makePaths(maze) {
