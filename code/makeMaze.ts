@@ -16,12 +16,8 @@ interface NodeM{
     ValidE?: boolean;
     ValidS?: boolean;
     ValidW?: boolean;
-
-    // If directoin is blocked by a wall
-    WallN: boolean;
-    WallE: boolean;
-    WallS: boolean;
-    WallW: boolean;
+    //walls
+    walls?: Array<Number>;
 }
 
 function getRandomModifiers(node: NodeM){
@@ -32,41 +28,44 @@ function intializeMazeNodes(maze: MazeM){
     let row: number =  maze.height;
     let col: number = maze.width;
     let tempArr: Array<NodeM> = new Array<NodeM>;
-    let tempValidArr: [boolean, boolean, boolean, boolean];
 
     for(let i = 0; i < row; i++){
         for(let j = 0; j < col; j++){
             let temp: NodeM ={
                 visited: false, 
-                directions: [null, null, null, null], 
-                WallN: true, 
-                WallE: true, 
-                WallS: true,
-                WallW: true
+                directions: [null, null, null, null]
             };
 
             // intialize North and South directions
             if(i == 0){
                 temp.ValidN = false;
                 temp.ValidS = true;
+                temp.walls.push(Directions.South);
             }else if (i == row-1){
                 temp.ValidS = false;
                 temp.ValidN = true;
+                temp.walls.push(Directions.North);
             }else{
                 temp.ValidN = true;
                 temp.ValidS = true;
+                temp.walls.push(Directions.South);
+                temp.walls.push(Directions.North);
             }
 
             // intialize West and East directions
             if(j == 0){
                 temp.ValidW = false;
                 temp.ValidE = true;
+                temp.walls.push(Directions.East);
             }else if (j == col-1){
                 temp.ValidE = false;
                 temp.ValidW = true;
+                temp.walls.push(Directions.West);
             }else{
                 temp.ValidW = true;
                 temp.ValidE = true;
+                temp.walls.push(Directions.West);
+                temp.walls.push(Directions.East);
             }
 
             tempArr.push(temp);
@@ -89,12 +88,12 @@ function connectNodes(maze: MazeM, curNode: NodeM, location: number){
         connectNodes(maze, nodes[location+1], location+1);
     }
 
-    if(!curNode.WallS){
+    if(!curNode.ValidS){
         curNode.directions[Directions.South] = nodes[location+8];
         connectNodes(maze, nodes[location+8], location+8);
     }
 
-    if(!curNode.WallW){
+    if(!curNode.ValidW){
         curNode.directions[Directions.West] = nodes[location-1];
         connectNodes(maze, nodes[location-1], location-1);
     }
@@ -115,10 +114,10 @@ let output: string = "";
 for(let i = 0; i < row*col; i++){
     let tempNode: NodeM = nodes[i];
     output += "Index: " + i + "\n"
-    output += "North: " + tempNode.WallN; 
-    output += ", East: " + tempNode.WallE; 
-    output += ", South: " + tempNode.WallS; 
-    output += ", West: " + tempNode.WallW; 
+    output += "North: " + tempNode.ValidN; 
+    output += ", East: " + tempNode.ValidE; 
+    output += ", South: " + tempNode.ValidS; 
+    output += ", West: " + tempNode.ValidW; 
     output += "\n"
 }
 
