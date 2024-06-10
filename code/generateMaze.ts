@@ -1,4 +1,6 @@
 import {Directions} from "./Utility";
+//import { isEqual } from 'lodash';
+
 
 interface MazeM{
     height: number;
@@ -29,7 +31,7 @@ function getRandomDirection(node: NodeM){
     let nonVisited: NodeM[] = retNode.nonVisitedDirection;
     for(let i = 0; i < nonVisited.length; i++){
         /*
-        if(_.isEqual(node, nonVisited[i])){
+        if(isEqual(node, nonVisited[i])){
             nonVisited.splice(i,1);
         }
             */

@@ -9,7 +9,7 @@ function getRandomDirection(node) {
     var nonVisited = retNode.nonVisitedDirection;
     for (var i = 0; i < nonVisited.length; i++) {
         /*
-        if(_.isEqual(node, nonVisited[i])){
+        if(isEqual(node, nonVisited[i])){
             nonVisited.splice(i,1);
         }
             */
