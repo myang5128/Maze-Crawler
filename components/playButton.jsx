@@ -52,12 +52,12 @@ const PlayButton = () => {
     <View className="flex-1 justify-center">
       <Pressable onPress={handlePress} className="flex-1">
         <ImageBackground source={background} resizeMode="cover" className="flex-1 items-center p-5">
-          <View className="flex-1 justify-center">
+          <View className="flex-1 justify-center items-center">
             <Text className='text-6xl font-mainfont text-black'>Treasures of Titus</Text>
           </View>
           <View className='flex-1 justify-center'>
             <Animated.Text 
-            className="text-2xl font-mainfont text-black"
+            className="text-3xl font-mainfont text-black"
             style={{ transform: [{ translateY: bounceValue }] }}>
               Begin Adventure!
             </Animated.Text> 
