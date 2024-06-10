@@ -1,5 +1,4 @@
 import {Directions} from "./Utility";
-//import { isEqual } from 'lodash';
 
 
 interface MazeM{
@@ -12,7 +11,6 @@ interface NodeM{
     visited: boolean;
     // the nodes in each direction north, east, south, west
     directions: [NodeM, NodeM, NodeM, NodeM];
-    nonVisitedDirection?: NodeM[];
 
     // If in the maze
     ValidN?: boolean;
@@ -24,21 +22,24 @@ interface NodeM{
 }
 
 function getRandomDirection(node: NodeM){
-    let index: number = Math.floor(Math.random()*node.nonVisitedDirection.length);
-    console.log(index);
-    let retNode: NodeM = node.nonVisitedDirection[index];
-    node.nonVisitedDirection.splice(index, 1);
-    let nonVisited: NodeM[] = retNode.nonVisitedDirection;
-    for(let i = 0; i < nonVisited.length; i++){
-        /*
-        if(isEqual(node, nonVisited[i])){
-            nonVisited.splice(i,1);
+    let tempNode: NodeM;
+
+    while(!tempNode){
+        let index: number = Math.floor(Math.random()*4);
+        tempNode = node.directions[index];
+        if(!tempNode.visited){
+            let tempIndex: number = node.walls.indexOf((index+2)%4);
+            let tempLength: number = node.walls.length -1;
+            if(tempIndex != tempLength){
+                let holder: number = node.walls[]
+            }
+
         }
-            */
     }
-    // may not be need
-    //retNode.nonVisitedDirection = nonVisited;
-    return retNode;
+    
+    
+
+    return tempNode;
 }
 
 function intializeMazeNodes(maze: MazeM){
@@ -97,7 +98,6 @@ function intializeMazeNodes(maze: MazeM){
 
 function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     let nodes: Array<NodeM> = maze.nodes;
-    let tempNonVisited: NodeM[] = [];
     let cols: number = maze.width;
     curNode.visited = true;
     
@@ -106,7 +106,6 @@ function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     if(curNode.ValidN){
         let directionalNode: NodeM = nodes[location-cols];
         curNode.directions[Directions.North] = directionalNode;
-        tempNonVisited.push(directionalNode);
         if(!directionalNode.visited){
             connectNodes(maze, directionalNode, location-cols);
         }
@@ -115,7 +114,6 @@ function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     if(curNode.ValidE){
         let directionalNode = nodes[location+1]; 
         curNode.directions[Directions.East] = directionalNode;
-        tempNonVisited.push(directionalNode);
         if(!directionalNode.visited){
             connectNodes(maze, directionalNode, location+1);
         }
@@ -125,7 +123,6 @@ function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     if(curNode.ValidS){
         let directionalNode: NodeM = nodes[location+cols];
         curNode.directions[Directions.South] = directionalNode;
-        tempNonVisited.push(directionalNode);
         if(!directionalNode.visited){
             connectNodes(maze, directionalNode, location+cols);
         }
@@ -135,20 +132,18 @@ function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     if(curNode.ValidW){
         let directionalNode: NodeM = nodes[location-1];
         curNode.directions[Directions.West] = directionalNode;
-        tempNonVisited.push(directionalNode);
         if(!directionalNode.visited){
             connectNodes(maze, directionalNode, location-1);
         }
     }
 
-    curNode.nonVisitedDirection = tempNonVisited;
     curNode.visited = false;
 }
 
 function makePaths(maze: MazeM, curNode: NodeM){
     let randomDirection: NodeM = getRandomDirection(curNode);
 
-
+    makePaths(maze, randomDirection);
 }
 
 let maze: MazeM = {height: 3, width: 3};
@@ -169,14 +164,6 @@ for(let i = 0; i < row*col; i++){
     output += ", West: " + tempNode.ValidW; 
     output += "\n";
     */
-
-    let length = tempNode.nonVisitedDirection.length;
-    for(let j = 0; j < length; j++){
-        if(tempNode.nonVisitedDirection[j]){
-            output += j + "/" + (length-1) + ", ";
-        }
-    }
-    output += "\n";
 }
 
 console.log(output);
