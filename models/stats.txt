@@ -1,0 +1,41 @@
+knight:
+    health: 8,
+    class = Knight,
+    attack = 2,
+    defense = 4,
+    magic = 1,
+    magicDefense = 3,
+    mana = 2,
+    gold = 10,
+    experience = 0,
+    hitChance = .95
+    critChance = .10
+    critDamage = .40
+
+ranger:
+    health: 6,
+    class = ranger,
+    attack = 3,
+    defense = 3,
+    magic = 2,
+    magicDefense = 1,
+    mana = 3,
+    gold = 10,
+    experience = 0,
+    hitChance = .90
+    critChance = .10
+    critDamage = .50
+
+rogue:
+    health: 5,
+    class = rogue,
+    attack = 4,
+    defense = 2,
+    magic = 1,
+    magicDefense = 1,
+    mana = 1,
+    gold = 15,
+    experience = 0,
+    hitChance = .97
+    critChance = .18
+    critDamage = .55
