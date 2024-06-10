@@ -10,6 +10,7 @@ interface NodeM{
     visited: boolean;
     // the nodes in each direction north, east, south, west
     directions: [NodeM, NodeM, NodeM, NodeM];
+    nonVisitedDirection?: NodeM[];
 
     // If in the maze
     ValidN?: boolean;
@@ -20,8 +21,22 @@ interface NodeM{
     walls?: number[];
 }
 
-function getRandomModifiers(node: NodeM){
-    return [0,0];
+function getRandomDirection(node: NodeM){
+    let index: number = Math.floor(Math.random()*node.nonVisitedDirection.length);
+    console.log(index);
+    let retNode: NodeM = node.nonVisitedDirection[index];
+    node.nonVisitedDirection.splice(index, 1);
+    let nonVisited: NodeM[] = retNode.nonVisitedDirection;
+    for(let i = 0; i < nonVisited.length; i++){
+        /*
+        if(_.isEqual(node, nonVisited[i])){
+            nonVisited.splice(i,1);
+        }
+            */
+    }
+    // may not be need
+    //retNode.nonVisitedDirection = nonVisited;
+    return retNode;
 }
 
 function intializeMazeNodes(maze: MazeM){
@@ -75,48 +90,62 @@ function intializeMazeNodes(maze: MazeM){
     }
     maze.nodes = tempArr;
     connectNodes(maze, maze.nodes[0], 0);
+    makePaths(maze, maze.nodes[0]);
 }
 
 function connectNodes(maze: MazeM, curNode: NodeM, location: number){
     let nodes: Array<NodeM> = maze.nodes;
+    let tempNonVisited: NodeM[] = [];
     let cols: number = maze.width;
     curNode.visited = true;
     
+    
 
     if(curNode.ValidN){
-        curNode.directions[Directions.North] = nodes[location-cols];
-
-        if(!nodes[location-cols].visited){
-            connectNodes(maze, maze.nodes[location-cols], location-cols);
+        let directionalNode: NodeM = nodes[location-cols];
+        curNode.directions[Directions.North] = directionalNode;
+        tempNonVisited.push(directionalNode);
+        if(!directionalNode.visited){
+            connectNodes(maze, directionalNode, location-cols);
         }
     }
 
     if(curNode.ValidE){
-        curNode.directions[Directions.East] = nodes[location+1];
-        if(!nodes[location+1].visited){
-            connectNodes(maze, maze.nodes[location+1], location+1);
+        let directionalNode = nodes[location+1]; 
+        curNode.directions[Directions.East] = directionalNode;
+        tempNonVisited.push(directionalNode);
+        if(!directionalNode.visited){
+            connectNodes(maze, directionalNode, location+1);
         }
         
     }
 
     if(curNode.ValidS){
-        curNode.directions[Directions.South] = nodes[location+cols];
-        if(!nodes[location+cols].visited){
-            connectNodes(maze, maze.nodes[location+cols], location+cols);
+        let directionalNode: NodeM = nodes[location+cols];
+        curNode.directions[Directions.South] = directionalNode;
+        tempNonVisited.push(directionalNode);
+        if(!directionalNode.visited){
+            connectNodes(maze, directionalNode, location+cols);
         }
         
     }
 
     if(curNode.ValidW){
-        curNode.directions[Directions.West] = nodes[location-1];
-        if(!nodes[location-1].visited){
-            connectNodes(maze, maze.nodes[location-1], location-1);
+        let directionalNode: NodeM = nodes[location-1];
+        curNode.directions[Directions.West] = directionalNode;
+        tempNonVisited.push(directionalNode);
+        if(!directionalNode.visited){
+            connectNodes(maze, directionalNode, location-1);
         }
     }
 
+    curNode.nonVisitedDirection = tempNonVisited;
+    curNode.visited = false;
 }
 
-function makePaths(maze: MazeM){
+function makePaths(maze: MazeM, curNode: NodeM){
+    let randomDirection: NodeM = getRandomDirection(curNode);
+
 
 }
 
@@ -129,12 +158,23 @@ let output: string = "";
 
 for(let i = 0; i < row*col; i++){
     let tempNode: NodeM = nodes[i];
-    output += "Index: " + i + "\n"
+    
+    output += "Index: " + i + ": "; //+ "\n";
+    /*
     output += "North: " + tempNode.ValidN; 
     output += ", East: " + tempNode.ValidE; 
     output += ", South: " + tempNode.ValidS; 
     output += ", West: " + tempNode.ValidW; 
-    output += "\n"
+    output += "\n";
+    */
+
+    let length = tempNode.nonVisitedDirection.length;
+    for(let j = 0; j < length; j++){
+        if(tempNode.nonVisitedDirection[j]){
+            output += j + "/" + (length-1) + ", ";
+        }
+    }
+    output += "\n";
 }
 
 console.log(output);
