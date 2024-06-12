@@ -5,7 +5,7 @@ import CharacterSelection from '../components/characterSelection';
 import CharacterSelectionStats from '../components/characterSelectionStats';
 import CharacterNameSelection from '../components/characterNameSelection';
 import CharacterSelectionStartButton from '../components/characterSelectionStartButton';
-import Knight from "../models/classes/Knight"; // dont know why this is error, it still works
+import Knight from "../models/classes/KnightClass"; // dont know why this is error, it still works
 import Ranger from "../models/classes/Ranger";
 import Rogue from "../models/classes/Rogue";
 
