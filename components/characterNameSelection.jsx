@@ -1,20 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, TextInput } from 'react-native';                                                                                                                                                                                                                                                                                     
 
-const CharacterNameSelection = () => {
-  const [text, onChangeText] = React.useState('');
+const CharacterNameSelection = ({ selectedValue, setSelectedValue }) => {
+  const [text, setText] = useState('Dorian');
+
+  // Update the placeholder based on whether text is empty or not
+  const placeholder = "Dorian";
+
   return (
     <View>
       <TextInput className="font-mainfont text-fwhite text-4xl justify-center items-center"
         editable
-        maxLength={20}
-        onChangeText={text => onChangeText(text)}
-        placeholder="Enter Your Name"
-        placeholderTextColor="#2a2d3c" 
-        value={text}
+        maxLength={12}
+        onChangeText={text => {
+          setText(text);
+          if (text) {
+            setSelectedValue(text);
+          }
+          else{
+            setSelectedValue(placeholder);
+          }
+        }}
+        placeholder={placeholder}
+        placeholderTextColor="#2a2d3c"
       />
     </View>
   )
 }
 
-export default CharacterNameSelection
+export default CharacterNameSelection;

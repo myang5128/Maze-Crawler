@@ -7,7 +7,7 @@ const CharacterSelectionStats = ({ classType, health, defense, attack, magic, ma
   return (
     <View className="justify-center w-80">
       <View className="items-center mb-5">
-        <Text className="font-mainfont text-fwhite text-5xl">{name} - {classType}</Text>
+        <Text className="font-mainfont text-fwhite text-4xl">{name} - {classType}</Text>
         <Text className="font-mainfont text-fwhite text-3xl">{gender} {race}</Text>
       </View>
       <View className="flex-row justify-between">
