@@ -1,3 +1,12 @@
+// UI -> Gives 3 Strings
+// Controller -> Parses 3 strings to number representation
+// Controller -> Passes these numbers to Model
+// Model -> Gets the base stat array for each of these 3 number
+// Model -> Sends back to Controller
+// Controller -> Combines arrays and sends back to UI
+// UI -> Takes combined array and updates stat component
+
+
 knight:
     health: 8,
     class = Knight,

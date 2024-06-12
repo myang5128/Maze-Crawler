@@ -72,7 +72,7 @@ function intializeMazeNodes(maze: MazeM){
     }
     maze.nodes = tempArr;
     connectNodes(maze, maze.nodes[0], 0);
-    makePaths(maze, maze.nodes[0]);
+    //makePaths(maze, maze.nodes[0]);
 }
 
 function connectNodes(maze: MazeM, curNode: NodeM, location: number){
@@ -207,22 +207,5 @@ function toString(maze: MazeM){
 
 let maze: MazeM = {height: 3, width: 3};
 intializeMazeNodes(maze);
-let row: number = maze.height;
-let col: number = maze.width;
-let nodes: Array<NodeM> = maze.nodes;
-let output: string = "";
-
-for(let i = 0; i < row*col; i++){
-    let tempNode: NodeM = nodes[i];
-    
-    output += "Index: " + i + ": "; //+ "\n";
-    /*
-    output += "North: " + tempNode.ValidN; 
-    output += ", East: " + tempNode.ValidE; 
-    output += ", South: " + tempNode.ValidS; 
-    output += ", West: " + tempNode.ValidW; 
-    output += "\n";
-    */
-}
-
+let output = toString(maze);
 console.log(output);
