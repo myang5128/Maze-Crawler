@@ -1,22 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { Animated, ImageBackground, Text, View, Pressable } from 'react-native';
-import { Link, useRouter } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
-import background from '../assets/images/backgroundMenu.jpg';
+import { Text, View, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { Audio } from 'expo-av';
 
 const CharacterSelectionStartButton = () => {
-  const bounceValue = useRef(new Animated.Value(0)).current;
   const [sound, setSound] = useState();
   const router = useRouter();
 
   const handlePress = async () => {
-    console.log('"Begin Adventure" pressed');
-    const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/clickSounds.wav'));
+    console.log('"Begin Game" pressed');
+    const { sound } = await Audio.Sound.createAsync( require('../../assets/sounds/clickSounds.wav'));
     setSound(sound);
     console.log("Do you hear sounds?");
     await sound.playAsync();
-    router.push('/character');
+    router.push('/combat');
   };
 
   useEffect(() => {

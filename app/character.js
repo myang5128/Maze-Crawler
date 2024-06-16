@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import CharacterSelection from '../components/characterSelection';
-import CharacterSelectionStats from '../components/characterSelectionStats';
-import CharacterNameSelection from '../components/characterNameSelection';
-import CharacterSelectionStartButton from '../components/characterSelectionStartButton';
-import Knight from "../models/classes/KnightClass"; // dont know why this is error, it still works
+import CharacterSelection from '../components/characterCreation/characterSelection';
+import CharacterSelectionStats from '../components/characterCreation/characterSelectionStats';
+import CharacterNameSelection from '../components/characterCreation/characterNameSelection';
+import CharacterSelectionStartButton from '../components/characterCreation/characterSelectionStartButton';
+import Knight from "../models/classes/KnightClass";
 import Ranger from "../models/classes/Ranger";
 import Rogue from "../models/classes/Rogue";
 

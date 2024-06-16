@@ -20,7 +20,7 @@ const characterSelection = ({ valueDicts, selectedValue, setSelectedValue }) => 
     const handlePressRight = async () => {
         const curValue = valueDicts.indexOf(selectedValue);
         const nextValue = (curValue + 1) % valueLength;
-        const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/clickSounds.wav'));
+        const { sound } = await Audio.Sound.createAsync( require('../../assets/sounds/clickSounds.wav'));
         setSound(sound);
         await sound.playAsync();
         setSelectedValue(valueDicts[nextValue]);
@@ -29,7 +29,7 @@ const characterSelection = ({ valueDicts, selectedValue, setSelectedValue }) => 
     const handlePressLeft = async () => {
         const curValue = valueDicts.indexOf(selectedValue);
         const prevValue = curValue === 0 ? valueLength - 1 : curValue - 1;
-        const { sound } = await Audio.Sound.createAsync( require('../assets/sounds/clickSounds.wav'));
+        const { sound } = await Audio.Sound.createAsync( require('../../assets/sounds/clickSounds.wav'));
         setSound(sound);
         await sound.playAsync();
         setSelectedValue(valueDicts[prevValue]);

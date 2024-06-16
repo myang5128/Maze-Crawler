@@ -1,7 +1,7 @@
 export default abstract class PlayerClasses {
     enemyName: string;
-    level: number;
-    health: number;
+    maxHealth: number;
+    curHealth: number;
     attack: number;
     defense: number;
     magic: number;
@@ -15,8 +15,8 @@ export default abstract class PlayerClasses {
 
     constructor() {
         this.enemyName = "NULL";
-        this.level = -1;
-        this.health = -1;
+        this.maxHealth = -1;
+        this.curHealth = -1;
         this.attack = -1;
         this.defense = -1;
         this.magic = -1;
@@ -29,39 +29,52 @@ export default abstract class PlayerClasses {
         this.critDamage = -1;
     }
 
+    abstract monsterScaling(level: number) : number[]
+
     // general getter method
     getStats(): (number | string)[] {
-        return [this.enemyName, this.level, this.health, this.attack, this.defense, this.magic, this.magicDefense, this.mana, this.gold, this.level, this.hitChance, this.critChance, this.critDamage];
+        return [this.enemyName, this.maxHealth, this.curHealth, this.attack, this.defense, this.magic, this.magicDefense, this.mana, this.gold, this.experience, this.hitChance, this.critChance, this.critDamage];
     }
 
     // random number gen
-    getRandomInt(): (number) {
-        return Math.floor(Math.random()) + 1;
-      }
-
-    // random damage gen; specialized per monster
-    getRandomDamage(max: number): (number) {
-        return Math.floor(Math.random()) * max + 1;
+    getRandomInt(max: number): number {
+        return Math.floor(Math.random() * max) + 1;
     }
 
     mainAttack(): (number) {
-        let attackDamage = this.getRandomDamage(this.attack);
+        let attackDamage = this.getRandomInt(this.attack);
         let extraDamage = 1;
 
         // check to see if attack hits
-        let enemyHit = this.getRandomInt();
+        let enemyHit = this.getRandomInt(1);
         // this misses
         if (enemyHit > this.hitChance) {
             return 0
         }
 
         // check for crit
-        let enemyCrit = this.getRandomInt();
+        let enemyCrit = this.getRandomInt(1);
         // this crits
         if (enemyCrit < this.critChance) {
             extraDamage = this.critDamage;
         }
         
         return attackDamage * extraDamage;
+    }
+
+    takeDamage(damage: number, type: string): void {
+        let defenseType : number;
+        switch (type) {
+            case "MAGIC":
+                defenseType = this.magicDefense;
+                break;
+            default:
+                defenseType = this.defense;
+        }
+        let totalDamage = damage - defenseType;
+        if (totalDamage < 0) {
+            totalDamage = 1;
+        }
+        this.curHealth -= totalDamage;
     }
 }

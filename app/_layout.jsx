@@ -29,6 +29,7 @@ const RootLayout = () => {
     <Stack>
       <Stack.Screen name="index" options = {{ headerShown: false}} />
       <Stack.Screen name="character" options = {{ headerShown: false }} />
+      <Stack.Screen name="combat" options = {{ headerShown: false }} />
     </Stack>
   )
 }
